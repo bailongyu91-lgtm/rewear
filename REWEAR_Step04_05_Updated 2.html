@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainable Fashion Service Prototype</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        window.tailwind = window.tailwind || {config: {}};
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#09090b',
+                        cardBg: '#18181b',
+                        cardBorder: '#27272a',
+                        limeAccent: '#a3e635',
+                        coralAccent: '#f87171',
+                        blueAccent: '#3b82f6'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar styling for slick aesthetic */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09090b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46;
+        }
+        .pulse-lime {
+            box-shadow: 0 0 15px rgba(163, 230, 53, 0.4);
+        }
+        .pulse-coral {
+            box-shadow: 0 0 15px rgba(248, 113, 113, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-100 font-sans min-h-screen flex flex-col items-center justify-center p-2 sm:p-4 select-none">
+
+    <!-- Prototype Wrapper -->
+    <div class="w-full max-w-5xl flex flex-col lg:flex-row gap-6 items-center lg:items-start justify-center">
+
+        <!-- Left Column: Interactive Flow Guide & Quick Controls -->
+        <div class="w-full lg:w-80 flex flex-col gap-4 text-xs">
+            <div class="bg-cardBg border border-cardBorder rounded-2xl p-4 shadow-xl">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Service Flow Status</span>
+                    <span class="px-2 py-0.5 rounded-full bg-limeAccent/20 text-limeAccent font-mono text-[10px]">FLOW GUIDE</span>
+                </div>
+                <h1 class="text-base font-bold text-white mb-1">앱 핵심 서비스 흐름</h1>
+                <p class="text-gray-400 text-xs mb-4">플로우 차트의 핵심 시나리오를 직접 체험해보세요.</p>
+
+                <!-- Interactive Flow Steps -->
+                <div class="space-y-2 relative before:absolute before:inset-0 before:left-3.5 before:w-0.5 before:bg-zinc-800 before:z-0">
+                    <button onclick="goToFlowStep(1)" id="flow-btn-1" class="w-full relative z-10 flex items-center gap-3 p-2.5 rounded-xl border border-limeAccent bg-limeAccent/10 text-left transition-all">
+                        <span class="w-3 h-3 rounded-full bg-limeAccent flex-shrink-0"></span>
+                        <div class="flex-1">
+                            <div class="font-semibold text-limeAccent text-xs">1. STYLE FEED</div>
+                            <div class="text-[10px] text-gray-400">코디 탐색 및 AI 따라 입기</div>
+                        </div>
+                    </button>
+
+                    <button onclick="goToFlowStep(2)" id="flow-btn-2" class="w-full relative z-10 flex items-center gap-3 p-2.5 rounded-xl border border-cardBorder bg-zinc-900/60 text-left hover:border-zinc-700 transition-all">
+                        <span class="w-3 h-3 rounded-full bg-zinc-700 flex-shrink-0"></span>
+                        <div class="flex-1">
+                            <div class="font-semibold text-gray-300 text-xs">2. AI RE-WEAR</div>
+                            <div class="text-[10px] text-gray-400">내 디지털 옷장 아이템 매칭</div>
+                        </div>
+                    </button>
+
+                    <button onclick="goToFlowStep(3)" id="flow-btn-3" class="w-full relative z-10 flex items-center gap-3 p-2.5 rounded-xl border border-cardBorder bg-zinc-900/60 text-left hover:border-zinc-700 transition-all">
+                        <span class="w-3 h-3 rounded-full bg-zinc-700 flex-shrink-0"></span>
+                        <div class="flex-1">
+                            <div class="font-semibold text-gray-300 text-xs">3. MY CLOSET</div>
+                            <div class="text-[10px] text-gray-400">등록 & 착용/수선/스타일 기록</div>
+                        </div>
+                    </button>
+
+                    <button onclick="goToFlowStep(4)" id="flow-btn-4" class="w-full relative z-10 flex items-center gap-3 p-2.5 rounded-xl border border-cardBorder bg-zinc-900/60 text-left hover:border-zinc-700 transition-all">
+                        <span class="w-3 h-3 rounded-full bg-zinc-700 flex-shrink-0"></span>
+                        <div class="flex-1">
+                            <div class="font-semibold text-gray-300 text-xs">4. UNUSED REMINDER</div>
+                            <div class="text-[10px] text-gray-400">미사용 감지 & 알림</div>
+                        </div>
+                    </button>
+
+                    <button onclick="goToFlowStep(5)" id="flow-btn-5" class="w-full relative z-10 flex items-center gap-3 p-2.5 rounded-xl border border-cardBorder bg-zinc-900/60 text-left hover:border-zinc-700 transition-all">
+                        <span class="w-3 h-3 rounded-full bg-zinc-700 flex-shrink-0"></span>
+                        <div class="flex-1">
+                            <div class="font-semibold text-coralAccent text-xs">5. CIRCULATE</div>
+                            <div class="text-[10px] text-gray-400">판매 · 교환 · 기부 · 수선</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Action Hints -->
+            <div class="bg-cardBg border border-cardBorder rounded-2xl p-4 text-gray-400 space-y-2">
+                <div class="flex items-center gap-2 text-white font-medium text-xs">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-limeAccent"></i> 주요 인터랙션 팁
+                </div>
+                <ul class="list-disc list-inside text-[11px] space-y-1 text-gray-400">
+                    <li><strong class="text-white">Home</strong> 피드에서 코디 클릭 시 "내 옷으로 따라 입기" AI 동작</li>
+                    <li><strong class="text-white">My Closet</strong>에서 DPP/라벨 태그 기반 옷 등록 체험</li>
+                    <li><strong class="text-white">Circulate</strong>에서 미사용 옷 선별 후 4가지 순환 경로 선택</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Phone Simulator Frame -->
+        <div class="relative w-[380px] h-[780px] bg-darkBg border-[10px] border-zinc-800 rounded-[48px] shadow-2xl flex flex-col overflow-hidden ring-1 ring-zinc-700/50">
+            
+            <!-- Mobile Top Bar Header -->
+            <div class="pt-3 px-6 pb-2 bg-darkBg flex items-center justify-between border-b border-zinc-800/80 z-30">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold tracking-tight text-limeAccent">RE:WEAR</span>
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-zinc-800 text-gray-400">DPP 데모</span>
+                </div>
+                <div class="flex items-center gap-3 text-xs text-gray-400">
+                    <i data-lucide="bell" class="w-4 h-4 hover:text-white cursor-pointer" onclick="switchTab('profile')"></i>
+                    <i data-lucide="search" class="w-4 h-4 hover:text-white cursor-pointer"></i>
+                </div>
+            </div>
+
+            <!-- Core Flow Banner Bar -->
+            <div class="bg-blue-600/90 backdrop-blur-md px-3 py-1.5 text-[10px] text-white flex items-center justify-between font-medium z-20">
+                <span class="text-blue-200">핵심 Flow:</span>
+                <span id="current-flow-text" class="truncate font-semibold text-lime-300">STYLE INSPIRATION ➔ RE-WEAR</span>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-80"></i>
+            </div>
+
+            <!-- Main App Content Area (Dynamic Screen Swapping) -->
+            <div id="app-screen-content" class="flex-1 overflow-y-auto relative bg-darkBg pb-20">
+                <!-- Dynamic HTML Injected by JS -->
+            </div>
+
+            <!-- Modal Layer (For Outfit Detail / AI Match / Registration / Circulate Path) -->
+            <div id="app-modal-layer" class="hidden absolute inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+                <div id="modal-container" class="w-full bg-cardBg border border-zinc-700 rounded-t-3xl sm:rounded-2xl p-5 max-h-[85%] overflow-y-auto animate-in slide-in-from-bottom duration-200">
+                    <!-- Dynamic Modal Content -->
+                </div>
+            </div>
+
+            <!-- Bottom Navigation Bar (주요 메뉴) -->
+            <div class="absolute bottom-0 inset-x-0 bg-zinc-950/95 backdrop-blur-md border-t border-zinc-800/80 px-2 py-2 flex justify-around items-center z-40">
+                <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center gap-1 text-limeAccent transition-colors py-1 px-2">
+                    <i data-lucide="compass" class="w-5 h-5"></i>
+                    <span class="text-[10px] font-medium">Home</span>
+                </button>
+                <button onclick="switchTab('closet')" id="nav-closet" class="flex flex-col items-center gap-1 text-gray-500 hover:text-gray-300 transition-colors py-1 px-2">
+                    <i data-lucide="shirt" class="w-5 h-5"></i>
+                    <span class="text-[10px] font-medium">My Closet</span>
+                </button>
+                <button onclick="switchTab('rewear')" id="nav-rewear" class="flex flex-col items-center gap-1 text-gray-500 hover:text-gray-300 transition-colors py-1 px-2 relative">
+                    <div class="w-10 h-10 -mt-5 rounded-full bg-gradient-to-tr from-lime-500 to-lime-300 flex items-center justify-center text-black shadow-lg shadow-lime-500/30">
+                        <i data-lucide="sparkles" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-[10px] font-bold text-limeAccent">Re-wear</span>
+                </button>
+                <button onclick="switchTab('circulate')" id="nav-circulate" class="flex flex-col items-center gap-1 text-gray-500 hover:text-gray-300 transition-colors py-1 px-2">
+                    <i data-lucide="repeat" class="w-5 h-5"></i>
+                    <span class="text-[10px] font-medium text-coralAccent">Circulate</span>
+                </button>
+                <button onclick="switchTab('community')" id="nav-community" class="flex flex-col items-center gap-1 text-gray-500 hover:text-gray-300 transition-colors py-1 px-2">
+                    <i data-lucide="book-open" class="w-5 h-5"></i>
+                    <span class="text-[10px] font-medium">Story</span>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Flowchart Reference & Live Legend -->
+        <div class="w-full lg:w-72 bg-cardBg border border-cardBorder rounded-2xl p-4 text-xs space-y-4">
+            <div>
+                <h3 class="text-xs font-bold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <i data-lucide="layers" class="w-4 h-4 text-limeAccent"></i> 주요 메뉴 구성
+                </h3>
+                <div class="space-y-1.5 text-gray-400 text-[11px]">
+                    <div class="p-2 rounded-lg bg-zinc-900 border border-zinc-800">
+                        <span class="text-white font-medium">Home:</span> 스타일 피드 & 추천
+                    </div>
+                    <div class="p-2 rounded-lg bg-zinc-900 border border-zinc-800">
+                        <span class="text-white font-medium">My Closet:</span> 옷장 관리 & 착용 이력
+                    </div>
+                    <div class="p-2 rounded-lg bg-zinc-900 border border-zinc-800 border-l-2 border-l-limeAccent">
+                        <span class="text-limeAccent font-medium">Re-wear:</span> 내 옷으로 따라 입기 (AI)
+                    </div>
+                    <div class="p-2 rounded-lg bg-zinc-900 border border-zinc-800 border-l-2 border-l-coralAccent">
+                        <span class="text-coralAccent font-medium">Circulate:</span> 판매 · 교환 · 기부 · 수선
+                    </div>
+                    <div class="p-2 rounded-lg bg-zinc-900 border border-zinc-800">
+                        <span class="text-white font-medium">Community:</span> Clothing Story 공유
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-zinc-800 pt-3">
+                <span class="text-[11px] text-gray-400 font-semibold block mb-2">DPP & AI Recognition Tags</span>
+                <div class="flex flex-wrap gap-1.5 text-[10px]">
+                    <span class="px-2 py-1 bg-zinc-800 text-lime-400 rounded-md border border-zinc-700">검정 재킷 ✓</span>
+                    <span class="px-2 py-1 bg-zinc-800 text-lime-400 rounded-md border border-zinc-700">흰 티 ✓</span>
+                    <span class="px-2 py-1 bg-zinc-800 text-lime-400 rounded-md border border-zinc-700">비슷한 데님 ✓</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Application State & Script -->
+    <script>
+        // Data Store
+        const myClosetItems = [
+            { id: 'c1', name: '오버핏 검정 재킷', category: '아우터', color: 'Black', wears: 18, lastWorn: '2일 전', icon: 'coat', tag: 'DPP-8821', image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=300&q=80' },
+            { id: 'c2', name: '클래식 화이트 반팔티', category: '상의', color: 'White', wears: 34, lastWorn: '1일 전', icon: 'shirt', tag: 'DPP-3012', image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=300&q=80' },
+            { id: 'c3', name: '스트레이트 핏 워싱 데님', category: '하의', color: 'Blue', wears: 22, lastWorn: '3일 전', icon: 'pants', tag: 'DPP-4991', image: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=300&q=80' },
+            { id: 'c4', name: '비티지 카키 트렌치코트', category: '아우터', color: 'Khaki', wears: 1, lastWorn: '45일 전', unused: true, tag: 'DPP-1092', image: 'https://images.unsplash.com/photo-1544441893-675973e31985?w=300&q=80' },
+            { id: 'c5', name: '울 믹스 니트 베스트', category: '상의', color: 'Beige', wears: 0, lastWorn: '60일 전', unused: true, tag: 'DPP-7740', image: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=300&q=80' }
+        ];
+
+        const styleFeeds = [
+            {
+                id: 'f1',
+                author: 'Minji_Style',
+                title: '미니멀 데일리 룩 셋업',
+                desc: '검정 재킷과 캐주얼 데님 조합으로 완성하는 모던 룩',
+                image: 'https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?w=500&q=80',
+                itemsMatched: ['검정 재킷', '흰 티', '비슷한 데님']
+            },
+            {
+                id: 'f2',
+                author: 'EcoStylist_K',
+                title: '빈티지 오버핏 레이어드',
+                desc: '3년째 착용 중인 트렌치코트를 활용한 리웨어 코디',
+                image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&q=80',
+                itemsMatched: ['카키 트렌치코트', '흰 티']
+            }
+        ];
+
+        const stories = [
+            {
+                user: '지후_Eco',
+                action: 'REPAIR & RE-WEAR',
+                title: '소매 단 수선 후 다시 입는 재킷',
+                content: '3년 전 입던 검정 재킷 소매를 수선해 다시 입었습니다! 새 옷 산 느낌이에요.',
+                date: '오늘',
+                like: 42
+            },
+            {
+                user: '서연',
+                action: 'CIRCULATE (DONATE)',
+                title: '미사용 니트 베스트 기부 완료',
+                content: '60일간 입지 않은 옷을 Circulate로 순환시켰습니다. 다음 사용자에게 전달 예정!',
+                date: '어제',
+                like: 28
+            }
+        ];
+
+        let currentTab = 'home';
+        let activeFlowStep = 1;
+
+        // Initialize App
+        window.onload = function() {
+            renderScreen('home');
+            window.lucide?.createIcons?.();
+        };
+
+        // Navigation Switching
+        function switchTab(tabName) {
+            currentTab = tabName;
+
+            // Update Bottom Nav Styling
+            const navIds = ['home', 'closet', 'rewear', 'circulate', 'community'];
+            navIds.forEach(id => {
+                const btn = document.getElementById(`nav-${id}`);
+                if (!btn) return;
+                if (id === tabName) {
+                    btn.className = id === 'circulate' 
+                        ? 'flex flex-col items-center gap-1 text-coralAccent transition-colors py-1 px-2' 
+                        : (id === 'rewear' ? 'flex flex-col items-center gap-1 text-gray-500 py-1 px-2' : 'flex flex-col items-center gap-1 text-limeAccent transition-colors py-1 px-2');
+                } else {
+                    btn.className = 'flex flex-col items-center gap-1 text-gray-500 hover:text-gray-300 transition-colors py-1 px-2';
+                }
+            });
+
+            renderScreen(tabName);
+        }
+
+        // Flow Stepper Trigger
+        function goToFlowStep(step) {
+            activeFlowStep = step;
+
+            // Update Flow buttons visual
+            for (let i = 1; i <= 5; i++) {
+                const btn = document.getElementById(`flow-btn-${i}`);
+                if (btn) {
+                    if (i === step) {
+                        btn.className = 'w-full relative z-10 flex items-center gap-3 p-2.5 rounded-xl border border-limeAccent bg-limeAccent/10 text-left transition-all';
+                        btn.children[0].className = 'w-3 h-3 rounded-full bg-limeAccent flex-shrink-0';
+                        btn.children[1].children[0].className = 'font-semibold text-limeAccent text-xs';
+                    } else {
+                        btn.className = 'w-full relative z-10 flex items-center gap-3 p-2.5 rounded-xl border border-cardBorder bg-zinc-900/60 text-left hover:border-zinc-700 transition-all';
+                        btn.children[0].className = 'w-3 h-3 rounded-full bg-zinc-700 flex-shrink-0';
+                        btn.children[1].children[0].className = 'font-semibold text-gray-300 text-xs';
+                    }
+                }
+            }
+
+            const flowText = document.getElementById('current-flow-text');
+
+            if (step === 1) {
+                flowText.innerText = 'STYLE INSPIRATION ➔ RE-WEAR';
+                switchTab('home');
+            } else if (step === 2) {
+                flowText.innerText = 'AI OUTFIT RECOGNITION';
+                switchTab('rewear');
+            } else if (step === 3) {
+                flowText.innerText = 'DIGITAL CLOSET & REGISTRATION';
+                switchTab('closet');
+            } else if (step === 4) {
+                flowText.innerText = 'UNUSED DETECTED ➔ REMINDER';
+                switchTab('circulate');
+                setTimeout(() => openModal('unused-alert'), 200);
+            } else if (step === 5) {
+                flowText.innerText = 'CIRCULATE ➔ NEXT USER';
+                switchTab('circulate');
+            }
+        }
+
+        // Main Screen Router Render
+        function renderScreen(tab) {
+            const container = document.getElementById('app-screen-content');
+
+            if (tab === 'home') {
+                container.innerHTML = `
+                    <div class="p-4 space-y-4">
+                        <!-- Top Banner / Search Header -->
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] uppercase font-mono tracking-wider text-limeAccent">STYLE FEED</span>
+                                <h2 class="text-base font-bold text-white">오늘의 스타일 피드</h2>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full bg-zinc-800 text-[10px] text-gray-300 border border-zinc-700">AI 추천 켜짐</span>
+                        </div>
+
+                        <!-- Feed Items List -->
+                        <div class="space-y-4">
+                            ${styleFeeds.map(feed => `
+                                <div class="bg-cardBg border border-cardBorder rounded-2xl overflow-hidden hover:border-zinc-700 transition-all">
+                                    <div class="relative h-56 bg-zinc-800 overflow-hidden">
+                                        <img src="${feed.image}" alt="outfit" class="w-full h-full object-cover">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3">
+                                            <div>
+                                                <div class="flex items-center gap-2 mb-1">
+                                                    <span class="text-xs font-bold text-white">@${feed.author}</span>
+                                                    <span class="px-2 py-0.5 rounded bg-limeAccent/20 text-limeAccent text-[9px] font-semibold">AI Match (예시)</span>
+                                                </div>
+                                                <p class="text-xs text-gray-200 font-medium">${feed.title}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-3 bg-cardBg space-y-2">
+                                        <div class="flex flex-wrap gap-1 text-[10px]">
+                                            ${feed.itemsMatched.map(item => `
+                                                <span class="px-2 py-0.5 rounded bg-zinc-800 text-lime-400 border border-zinc-700/60">✓ ${item}</span>
+                                            `).join('')}
+                                        </div>
+                                        <div class="pt-2 flex items-center justify-between border-t border-zinc-800/80">
+                                            <button onclick="openOutfitDetail('${feed.id}')" class="text-xs text-gray-400 hover:text-white flex items-center gap-1">
+                                                <span>상세 보기</span>
+                                                <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                                            </button>
+                                            <button onclick="triggerAIRewear('${feed.id}')" class="px-3 py-1.5 rounded-xl bg-limeAccent text-black font-bold text-xs flex items-center gap-1.5 shadow-md hover:bg-lime-400 transition-all">
+                                                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                                                <span>내 옷으로 따라 입기</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (tab === 'closet') {
+                container.innerHTML = `
+                    <div class="p-4 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] uppercase font-mono tracking-wider text-limeAccent">MY CLOSET</span>
+                                <h2 class="text-base font-bold text-white">내 디지털 옷장</h2>
+                            </div>
+                            <button onclick="openModal('register-clothing')" class="px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-limeAccent font-semibold text-xs border border-limeAccent/30 flex items-center gap-1">
+                                <i data-lucide="plus" class="w-3.5 h-3.5"></i> 옷 등록 (DPP)
+                            </button>
+                        </div>
+
+                        <!-- Closet Summary Stat -->
+                        <div class="grid grid-cols-3 gap-2">
+                            <div class="bg-cardBg border border-cardBorder rounded-xl p-2.5 text-center">
+                                <span class="text-[10px] text-gray-400 block">총 옷 수</span>
+                                <span class="text-sm font-bold text-white">${myClosetItems.length} 벌</span>
+                            </div>
+                            <div class="bg-cardBg border border-cardBorder rounded-xl p-2.5 text-center">
+                                <span class="text-[10px] text-gray-400 block">이번 달 착용 (예시)</span>
+                                <span class="text-sm font-bold text-limeAccent">14 회</span>
+                            </div>
+                            <div class="bg-cardBg border border-cardBorder rounded-xl p-2.5 text-center">
+                                <span class="text-[10px] text-gray-400 block">미사용 감지</span>
+                                <span class="text-sm font-bold text-coralAccent">${myClosetItems.filter(x=>x.unused && !x.dismissed).length} 벌</span>
+                            </div>
+                        </div>
+
+                        <!-- Closet Grid -->
+                        <div class="grid grid-cols-2 gap-3">
+                            ${myClosetItems.map(item => `
+                                <div class="bg-cardBg border ${item.unused ? 'border-coralAccent/50' : 'border-cardBorder'} rounded-xl p-2.5 flex flex-col justify-between relative group">
+                                    ${item.unused ? '<span class="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-coralAccent/20 text-coralAccent text-[9px] font-bold">미사용</span>' : ''}
+                                    <div class="h-28 rounded-lg overflow-hidden bg-zinc-800 mb-2">
+                                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="space-y-1">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-[10px] text-gray-400">${item.category}</span>
+                                            <span class="text-[9px] font-mono text-zinc-500">${item.tag}</span>
+                                        </div>
+                                        <p class="text-xs font-semibold text-gray-100 truncate">${item.name}</p>
+                                        <div class="text-[10px] text-gray-400 flex items-center justify-between pt-1 border-t border-zinc-800">
+                                            <span>착용 ${item.wears}회</span>
+                                            <span class="text-zinc-500">${item.lastWorn}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (tab === 'rewear') {
+                container.innerHTML = `
+                    <div class="p-4 space-y-4">
+                        <div>
+                            <span class="text-[10px] uppercase font-mono tracking-wider text-limeAccent">AI RE-WEAR ENGINE</span>
+                            <h2 class="text-base font-bold text-white">내 옷으로 따라 입기 (매칭)</h2>
+                            <p class="text-xs text-gray-400 mt-0.5">외부 코디를 내 디지털 옷장의 아이템으로 대체 매칭합니다.</p>
+                        </div>
+
+                        <!-- AI Recognition Result Card -->
+                        <div class="bg-gradient-to-br from-zinc-900 to-cardBg border border-limeAccent/40 rounded-2xl p-4 space-y-3">
+                            <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
+                                <span class="text-xs font-bold text-limeAccent flex items-center gap-1.5">
+                                    <i data-lucide="cpu" class="w-4 h-4"></i> AI OUTFIT RECOGNITION
+                                </span>
+                                <span class="text-[10px] text-gray-400">매칭 결과 예시</span>
+                            </div>
+
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between p-2 rounded-lg bg-zinc-950 border border-zinc-800">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="check-circle-2" class="w-4 h-4 text-limeAccent"></i>
+                                        <span class="text-xs text-gray-200">검정 재킷 ✓</span>
+                                    </div>
+                                    <span class="text-[10px] text-lime-400 font-mono">오버핏 검정 재킷 매칭</span>
+                                </div>
+                                <div class="flex items-center justify-between p-2 rounded-lg bg-zinc-950 border border-zinc-800">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="check-circle-2" class="w-4 h-4 text-limeAccent"></i>
+                                        <span class="text-xs text-gray-200">흰 티 ✓</span>
+                                    </div>
+                                    <span class="text-[10px] text-lime-400 font-mono">클래식 화이트 반팔티 매칭</span>
+                                </div>
+                                <div class="flex items-center justify-between p-2 rounded-lg bg-zinc-950 border border-zinc-800">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="check-circle-2" class="w-4 h-4 text-limeAccent"></i>
+                                        <span class="text-xs text-gray-200">비슷한 데님 ✓</span>
+                                    </div>
+                                    <span class="text-[10px] text-lime-400 font-mono">스트레이트 핏 데님 매칭</span>
+                                </div>
+                            </div>
+
+                            <button onclick="recordWearEvent()" class="w-full py-2.5 rounded-xl bg-limeAccent text-black font-bold text-xs flex items-center justify-center gap-2 shadow-lg hover:bg-lime-400">
+                                <i data-lucide="check" class="w-4 h-4"></i>
+                                <span>오늘의 착용 기록하기 (WEAR & TRACK)</span>
+                            </button>
+                        </div>
+
+                        <!-- Closet Simulation Visual Preview -->
+                        <div class="bg-cardBg border border-cardBorder rounded-2xl p-3">
+                            <span class="text-xs font-semibold text-gray-300 block mb-2">완성된 내 리웨어 Look</span>
+                            <div class="grid grid-cols-3 gap-2">
+                                <img src="${myClosetItems[0].image}" class="h-24 w-full object-cover rounded-lg border border-zinc-700">
+                                <img src="${myClosetItems[1].image}" class="h-24 w-full object-cover rounded-lg border border-zinc-700">
+                                <img src="${myClosetItems[2].image}" class="h-24 w-full object-cover rounded-lg border border-zinc-700">
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (tab === 'circulate') {
+                container.innerHTML = `
+                    <div class="p-4 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] uppercase font-mono tracking-wider text-coralAccent">CIRCULATION HUB</span>
+                                <h2 class="text-base font-bold text-white">CIRCULATE (순환하기)</h2>
+                            </div>
+                            <span class="px-2 py-0.5 rounded bg-coralAccent/20 text-coralAccent text-[10px] font-bold">NEXT USER</span>
+                        </div>
+
+                        <!-- Smart Reminder Notification Card -->
+                        <div class="bg-gradient-to-br from-zinc-900 to-zinc-950 border border-coralAccent/40 rounded-2xl p-4 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2 text-coralAccent font-bold text-xs">
+                                    <i data-lucide="alert-circle" class="w-4 h-4"></i> SMART REMINDER (미사용 감지)
+                                </div>
+                                <span class="text-[10px] text-gray-400">이번 주 감지</span>
+                            </div>
+                            <p class="text-xs text-gray-300">최근 45일간 입지 않은 옷이 감지되었습니다. 새 생명을 불어넣어 보세요!</p>
+                            
+                            <div class="bg-zinc-900 p-2.5 rounded-xl border border-zinc-800 flex items-center gap-3">
+                                <img src="${myClosetItems[3].image}" class="w-12 h-12 rounded-lg object-cover">
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="text-xs font-semibold text-white truncate">${myClosetItems[3].name}</h4>
+                                    <p class="text-[10px] text-gray-400">마지막 착용: 45일 전 | DPP 예시</p>
+                                </div>
+                                <button onclick="openModal('choose-path')" class="px-2.5 py-1.5 rounded-lg bg-coralAccent text-black font-bold text-[11px]">
+                                    순환하기
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- CHOOSE PATH OPTIONS (From Flowchart) -->
+                        <div>
+                            <span class="text-xs font-bold text-gray-300 block mb-2">순환 경로 선택 (CHOOSE PATH)</span>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="openModal('path-sale')" class="p-3 bg-cardBg border border-cardBorder hover:border-coralAccent/60 rounded-xl text-left space-y-1 transition-all">
+                                    <div class="flex items-center justify-between text-coralAccent">
+                                        <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                                        <span class="text-[10px] font-mono">01</span>
+                                    </div>
+                                    <div class="font-bold text-xs text-white">SALE (판매)</div>
+                                    <div class="text-[10px] text-gray-400">의류 판매 경로 선택</div>
+                                </button>
+                                <button onclick="openModal('path-exchange')" class="p-3 bg-cardBg border border-cardBorder hover:border-coralAccent/60 rounded-xl text-left space-y-1 transition-all">
+                                    <div class="flex items-center justify-between text-coralAccent">
+                                        <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
+                                        <span class="text-[10px] font-mono">02</span>
+                                    </div>
+                                    <div class="font-bold text-xs text-white">EXCHANGE (교환)</div>
+                                    <div class="text-[10px] text-gray-400">타 사용자 옷과 1:1 맞교환</div>
+                                </button>
+                                <button onclick="openModal('path-donate')" class="p-3 bg-cardBg border border-cardBorder hover:border-coralAccent/60 rounded-xl text-left space-y-1 transition-all">
+                                    <div class="flex items-center justify-between text-coralAccent">
+                                        <i data-lucide="heart" class="w-4 h-4"></i>
+                                        <span class="text-[10px] font-mono">03</span>
+                                    </div>
+                                    <div class="font-bold text-xs text-white">DONATE (기부)</div>
+                                    <div class="text-[10px] text-gray-400">친환경 단체 소셜 기부</div>
+                                </button>
+                                <button onclick="openModal('path-repair')" class="p-3 bg-cardBg border border-cardBorder hover:border-coralAccent/60 rounded-xl text-left space-y-1 transition-all">
+                                    <div class="flex items-center justify-between text-coralAccent">
+                                        <i data-lucide="wrench" class="w-4 h-4"></i>
+                                        <span class="text-[10px] font-mono">04</span>
+                                    </div>
+                                    <div class="font-bold text-xs text-white">REPAIR (수선)</div>
+                                    <div class="text-[10px] text-gray-400">전문 리폼 및 수선 연계</div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (tab === 'community') {
+                container.innerHTML = `
+                    <div class="p-4 space-y-4">
+                        <div>
+                            <span class="text-[10px] uppercase font-mono tracking-wider text-limeAccent">CLOTHING STORY</span>
+                            <h2 class="text-base font-bold text-white">착용 · 수선 · 거래 스토리</h2>
+                            <p class="text-xs text-gray-400 mt-0.5">옷의 지속가능한 일상을 공유하는 커뮤니티입니다.</p>
+                        </div>
+
+                        <div class="space-y-3">
+                            ${stories.map(story => `
+                                <div class="bg-cardBg border border-cardBorder rounded-2xl p-3.5 space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-xs font-bold text-white">@${story.user}</span>
+                                        <span class="px-2 py-0.5 rounded bg-zinc-800 text-lime-400 text-[9px] font-semibold">${story.action}</span>
+                                    </div>
+                                    <h4 class="text-xs font-bold text-gray-100">${story.title}</h4>
+                                    <p class="text-[11px] text-gray-300 leading-relaxed">${story.content}</p>
+                                    <div class="pt-2 flex items-center justify-between border-t border-zinc-800 text-[10px] text-gray-500">
+                                        <span>${story.date}</span>
+                                        <div class="flex items-center gap-1 text-coralAccent">
+                                            <i data-lucide="heart" class="w-3 h-3"></i>
+                                            <span>${story.like}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (tab === 'profile') {
+                container.innerHTML = `
+                    <div class="p-4 space-y-4">
+                        <div class="flex items-center gap-3 bg-cardBg border border-cardBorder p-3 rounded-2xl">
+                            <div class="w-12 h-12 rounded-full bg-limeAccent/20 border border-limeAccent flex items-center justify-center text-limeAccent font-bold text-sm">
+                                USER
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-bold text-white">Eco Fashion Enthusiast</h3>
+                                <p class="text-[10px] text-gray-400">DPP ID: 0x8F9a...32B1</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-cardBg border border-cardBorder rounded-2xl p-3 space-y-2">
+                            <span class="text-xs font-semibold text-gray-300">내 영구 착용 및 탄소 절감 데이터</span>
+                            <div class="flex justify-between items-center text-xs text-gray-400 py-1 border-b border-zinc-800">
+                                <span>누적 순환 옷 수</span>
+                                <span class="text-limeAccent font-bold">예시 데이터</span>
+                            </div>
+                            <div class="flex justify-between items-center text-xs text-gray-400 py-1">
+                                <span>탄소 절감 효과 (미측정)</span>
+                                <span class="text-limeAccent font-bold">데이터 없음</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            window.lucide?.createIcons?.();
+        }
+
+        // Modal Action Handlers
+        function openModal(type) {
+            const modalLayer = document.getElementById('app-modal-layer');
+            const container = document.getElementById('modal-container');
+            modalLayer.classList.remove('hidden');
+
+            if (type === 'register-clothing') {
+                container.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                                <i data-lucide="qr-code" class="w-4 h-4 text-limeAccent"></i> REGISTRATION (DPP / Label)
+                            </h3>
+                            <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
+                        </div>
+                        <p class="text-xs text-gray-400">Photo + AI Attribute 자동 인식을 통해 옷을 등록합니다.</p>
+                        
+                        <div class="border-2 border-dashed border-zinc-700 rounded-xl p-6 text-center bg-zinc-950 space-y-2 cursor-pointer hover:border-limeAccent transition-all">
+                            <i data-lucide="camera" class="w-8 h-8 text-limeAccent mx-auto"></i>
+                            <div class="text-xs text-gray-300">라벨 태그 스캔 또는 사진 업로드</div>
+                            <span class="text-[9px] text-zinc-500">DPP 태그 자동 인식 지원</span>
+                        </div>
+
+                        <div class="space-y-2 text-xs">
+                            <input type="text" placeholder="의류명 (예: 블랙 클래식 자켓)" class="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2.5 text-gray-200 placeholder-zinc-600 focus:outline-none focus:border-limeAccent">
+                            <select class="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2.5 text-gray-300 focus:outline-none">
+                                <option>아우터</option>
+                                <option>상의</option>
+                                <option>하의</option>
+                            </select>
+                        </div>
+
+                        <button onclick="completeRegistration()" class="w-full py-2.5 rounded-xl bg-limeAccent text-black font-bold text-xs shadow-lg hover:bg-lime-400">
+                            디지털 옷장에 등록 완료
+                        </button>
+                    </div>
+                `;
+            } else if (type === 'choose-path' || type === 'unused-alert') {
+                container.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-sm font-bold text-coralAccent flex items-center gap-2">
+                                <i data-lucide="repeat" class="w-4 h-4"></i> CHOOSE PATH (순환 선택)
+                            </h3>
+                            <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
+                        </div>
+                        <p class="text-xs text-gray-300">입지 않는 옷의 다음 단계를 선택해 주세요.</p>
+
+                        <div class="space-y-2">
+                            <button onclick="openModal('path-sale')" class="w-full p-3 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-between text-left hover:border-coralAccent">
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="shopping-bag" class="w-4 h-4 text-coralAccent"></i>
+                                    <div>
+                                        <div class="text-xs font-bold text-white">SALE (판매)</div>
+                                        <div class="text-[10px] text-gray-400">다음 사용자에게 판매</div>
+                                    </div>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-500"></i>
+                            </button>
+                            <button onclick="openModal('path-exchange')" class="w-full p-3 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-between text-left hover:border-coralAccent">
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="arrow-left-right" class="w-4 h-4 text-coralAccent"></i>
+                                    <div>
+                                        <div class="text-xs font-bold text-white">EXCHANGE (교환)</div>
+                                        <div class="text-[10px] text-gray-400">비슷한 가치의 옷과 맞교환</div>
+                                    </div>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-500"></i>
+                            </button>
+                            <button onclick="openModal('path-donate')" class="w-full p-3 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-between text-left hover:border-coralAccent">
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="heart" class="w-4 h-4 text-coralAccent"></i>
+                                    <div>
+                                        <div class="text-xs font-bold text-white">DONATE (기부)</div>
+                                        <div class="text-[10px] text-gray-400">소셜 그린 기부 파트너</div>
+                                    </div>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-500"></i>
+                            </button>
+                            <button onclick="openModal('path-repair')" class="w-full p-3 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-between text-left hover:border-coralAccent">
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="wrench" class="w-4 h-4 text-coralAccent"></i>
+                                    <div>
+                                        <div class="text-xs font-bold text-white">REPAIR (수선)</div>
+                                        <div class="text-[10px] text-gray-400">리폼 파트너 연결 및 다시 입기</div>
+                                    </div>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-500"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (type.startsWith('path-')) {
+                const actionName = type.replace('path-', '').toUpperCase();
+                container.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-sm font-bold text-coralAccent">${actionName} 진행</h3>
+                            <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
+                        </div>
+                        <div class="p-3 bg-zinc-900 rounded-xl border border-zinc-800 space-y-1">
+                            <span class="text-[10px] text-gray-400">선택된 옷</span>
+                            <div class="text-xs font-bold text-white">${myClosetItems[3].name}</div>
+                            <span class="text-[9px] text-lime-400">DPP 이력 보증 등록됨</span>
+                        </div>
+                        <p class="text-xs text-gray-300">${actionName} 프로세스를 시작합니다. NEXT USER에게 전달 시 지속가능성 리워드가 부여됩니다.</p>
+                        <button onclick="completeCirculateAction('${actionName}')" class="w-full py-2.5 rounded-xl bg-coralAccent text-black font-bold text-xs shadow-lg hover:bg-red-400">
+                            ${actionName} 등록 완료 ➔ NEXT USER
+                        </button>
+                    </div>
+                `;
+            }
+
+            window.lucide?.createIcons?.();
+        }
+
+        function closeModal() {
+            document.getElementById('app-modal-layer').classList.add('hidden');
+        }
+
+        function openOutfitDetail(feedId) {
+            const feed = styleFeeds.find(f => f.id === feedId);
+            const container = document.getElementById('modal-container');
+            document.getElementById('app-modal-layer').classList.remove('hidden');
+
+            container.innerHTML = `
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xs font-bold text-limeAccent">OUTFIT DETAIL (코디 상세)</h3>
+                        <button onclick="closeModal()" class="text-gray-400"><i data-lucide="x" class="w-4 h-4"></i></button>
+                    </div>
+                    <img src="${feed.image}" class="h-44 w-full object-cover rounded-xl">
+                    <h4 class="text-sm font-bold text-white">${feed.title}</h4>
+                    <p class="text-xs text-gray-300">${feed.desc}</p>
+                    <button onclick="triggerAIRewear('${feed.id}')" class="w-full py-2.5 rounded-xl bg-limeAccent text-black font-bold text-xs flex items-center justify-center gap-1.5">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        <span>AI RE-WEAR (내 옷으로 따라 입기)</span>
+                    </button>
+                </div>
+            `;
+            window.lucide?.createIcons?.();
+        }
+
+        function triggerAIRewear(feedId) {
+            closeModal();
+            goToFlowStep(2);
+        }
+
+        function recordWearEvent() {
+            alert('착용 기록이 완료되었습니다! (WEAR & TRACK 반영)');
+            goToFlowStep(3);
+        }
+
+        function completeRegistration() {
+            closeModal();
+            alert('디지털 옷장에 신규 의류가 성공적으로 등록되었습니다.');
+            switchTab('closet');
+        }
+
+        function completeCirculateAction(action) {
+            closeModal();
+            alert(`${action} 요청이 제출되었습니다. NEXT USER를 위한 순환 단계로 이동합니다.`);
+            switchTab('community');
+        }
+    </script>
+<script>
+/* RE:WEAR 2026-11-10 / 교수 피드백 반영: STEP 04 & 05 심화
+   Original steps 01-03 and visual design are retained. All outcomes are simulated.
+*/
+const existingRenderScreen = renderScreen;
+const existingOpenModal = openModal;
+const demoKey = 'rewear_step45_prototype_v2';
+const pathway = {
+  sale: {name:'SALE · 판매', who:'구매자 / 중고거래 파트너', desc:'기존 의류 정보를 활용하여 판매 요청서를 준비합니다.', failure:'관심 있는 구매자가 없거나 가격이 맞지 않음'},
+  exchange: {name:'EXCHANGE · 교환', who:'교환 상대 사용자', desc:'사이즈와 희망 조건을 확인한 후 교환 의사를 전달합니다.', failure:'교환할 물건의 조건과 사이즈가 맞지 않음'},
+  donate: {name:'DONATE · 기부', who:'기부·재사용 기관', desc:'받을 수 있는 상태인지 확인한 후 기부 요청서를 준비합니다.', failure:'기관이 해당 의류의 상태 또는 종류를 접수하지 않음'},
+  repair: {name:'REPAIR · 수선', who:'수선·리폼 파트너', desc:'손상 위치와 원하는 수선 내용을 기록합니다.', failure:'수선 비용이나 작업 범위가 맞지 않음'}
+};
+const expState = { selectedId:'c4', records:[], preferences:{reminderDays:45}, actions:[] };
+for(const item of myClosetItems) {
+  item.condition = item.condition || '양호';
+  item.note = item.note || '';
+  item.dismissed = false;
+}
+try {
+  const saved = JSON.parse(localStorage.getItem(demoKey) || 'null');
+  if (saved && typeof saved === 'object') {
+    if (saved.state) {
+      expState.selectedId = saved.state.selectedId || 'c4';
+      expState.records = Array.isArray(saved.state.records) ? saved.state.records : [];
+      expState.actions = Array.isArray(saved.state.actions) ? saved.state.actions : [];
+      expState.preferences = saved.state.preferences || expState.preferences;
+    }
+    if (Array.isArray(saved.items)) {
+      for (const it of saved.items) {
+        const original = myClosetItems.find(x=>x.id===it.id);
+        if(original) Object.assign(original,it);
+        else if (it && it.id && it.name) myClosetItems.push(it);
+      }
+    }
+  }
+} catch(e) { /* browser may block localStorage for file:// */ }
+function persistDemo() {
+  try { localStorage.setItem(demoKey,JSON.stringify({state:expState,items:myClosetItems})); } catch(e) {}
+}
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function selectedGarment() { return myClosetItems.find(it => it.id === expState.selectedId) || myClosetItems[3] || myClosetItems[0]; }
+function garmentById(id) { return myClosetItems.find(it=>it.id===id); }
+function statusLabel(status) {
+  return ({requested:'요청서 생성 (실제 전송 안 됨)',matched:'연결 성공 시뮬레이션',completed:'인수·재사용 완료 시뮬레이션',failed:'연결 실패 시뮬레이션'})[status] || '미정';
+}
+function card(content) { return `<div class="bg-cardBg border border-cardBorder rounded-2xl p-3.5 space-y-2">${content}</div>`; }
+function button(label,code,variant='coral') {
+  const classes=variant==='gray'?'border border-zinc-700 text-gray-200 bg-zinc-900':variant==='lime'?'bg-limeAccent text-black':'bg-coralAccent text-black';
+  return `<button onclick="${code}" class="px-3 py-2.5 rounded-xl font-bold text-xs ${classes} hover:opacity-85 transition-all">${label}</button>`;
+}
+function showNewModal(body) {
+  document.getElementById('app-modal-layer').classList.remove('hidden');
+  document.getElementById('modal-container').innerHTML = body;
+  if(window.lucide?.createIcons) lucide.createIcons();
+}
+function modalTitle(title,desc='') { return `<div class="flex justify-between items-start gap-3"><div><h3 class="text-sm font-bold text-white">${title}</h3>${desc?`<p class="text-[11px] text-gray-400 mt-1">${desc}</p>`:''}</div><button onclick="closeModal()" aria-label="닫기" class="text-gray-400 text-xl">×</button></div>`; }
+function activeUnused() { return myClosetItems.filter(it=>it.unused&&!it.dismissed&&!it.simulatedTransfer); }
+function renderStage45() {
+  const current=selectedGarment();
+  const items=activeUnused();
+  const last=expState.records.at(-1);
+  return `<div class="p-4 space-y-4">
+    <div><div class="text-[10px] uppercase font-mono tracking-wider text-coralAccent">STEP 04 & 05 / SERVICE DESIGN TEST</div>
+      <h2 class="text-base font-bold">미사용 알림 → 의류 순환</h2>
+      <p class="text-[11px] text-gray-400 mt-1">원래 프로젝트의 재착용 → 사용 이력 → 다음 사용자 연결 흐름을 검증하는 데모입니다.</p></div>
+    ${card(`<div class="flex items-center justify-between"><strong class="text-xs text-coralAccent">04 · UNUSED REMINDER</strong><span class="text-[10px] text-gray-500">사용자 판단 필요</span></div>
+      <p class="text-[11px] text-gray-300">기록에 따르면 ${items.length}벌의 옷이 오래 입지 않은 의류로 표시됩니다. <strong>실제 착용 여부는 앱이 자동 확인할 수 없습니다.</strong></p>
+      <div class="space-y-2">${items.length ? items.map(it=>`<div class="flex gap-2 items-center border border-zinc-800 bg-zinc-950 rounded-xl p-2">
+        <img src="${esc(it.image)}" alt="${esc(it.name)}" class="h-12 w-12 rounded object-cover"/>
+        <div class="flex-1 min-w-0"><p class="text-xs font-semibold truncate">${esc(it.name)}</p><p class="text-[10px] text-gray-400">마지막 기록: ${esc(it.lastWorn)}</p></div>
+        ${button('확인',`openUnusedReview('${it.id}')`,'gray')}</div>`).join('') : `<p class="text-[11px] text-lime-400">현재 확인할 알림이 없습니다. 아래의 초기화로 시나리오를 다시 체험할 수 있습니다.</p>`}</div>
+      ${button('STEP 04 시나리오 열기',`openUnusedReview('${current.id}')`,'coral')}`)}
+    ${card(`<div class="flex items-center justify-between"><strong class="text-xs text-coralAccent">05 · CIRCULATE</strong><span class="text-[10px] text-gray-500">실제 거래 연동 없음</span></div>
+      <label for="demo-item" class="block text-[11px] text-gray-300">어떤 옷을 순환시킬까요?</label>
+      <select id="demo-item" onchange="chooseDemoGarment(this.value)" class="w-full bg-zinc-950 border border-zinc-700 rounded-lg p-2 text-xs text-gray-100">${myClosetItems.map(it=>`<option value="${esc(it.id)}" ${it.id===current.id?'selected':''}>${esc(it.name)}</option>`).join('')}</select>
+      <p class="text-[10px] text-gray-400">선택한 옷의 기존 이름·분류·착용 기록을 재사용합니다.</p>
+      <div class="grid grid-cols-2 gap-2">${Object.entries(pathway).map(([k,v])=>`<button onclick="openRouteForm('${k}')" class="border border-zinc-700 hover:border-coralAccent rounded-xl p-2.5 text-left bg-zinc-950"><strong class="text-[11px] text-gray-100">${v.name}</strong><p class="text-[9px] text-gray-400 mt-1">${v.who}</p></button>`).join('')}</div>`)}
+    ${last ? card(`<strong class="text-xs text-limeAccent">최근 테스트 기록</strong><p class="text-[11px] text-gray-300">${esc(garmentById(last.itemId)?.name || '의류')} · ${pathway[last.route]?.name || ''}</p><p class="text-[11px] text-coralAccent">${statusLabel(last.status)}</p>${button('성공 / 실패 결과 보기',`showResult('${last.id}')`,'gray')}`) : ''}
+    ${card(`<strong class="text-xs text-white">교수님 피드백 반영</strong><p class="text-[11px] text-gray-400">이해관계자: 사용자 · 다음 사용자 · 플랫폼 · 거래/기부/수선 파트너</p><p class="text-[11px] text-gray-400">검증 질문: ① 알림이 정확하고 부담이 적은가? ② 기존 의류 정보 재사용이 편리한가? ③ 실패 후 다른 경로로 이어질 수 있는가?</p><p class="text-[10px] text-yellow-300">성공·실패 결과와 모든 외부 연결은 수업용 시뮬레이션입니다.</p>`)}
+    <button onclick="resetDemo()" class="text-[10px] text-gray-500 underline">데모 상태 초기화</button>
+  </div>`;
+}
+renderScreen = function(tab) {
+  if(tab === 'circulate') {
+    document.getElementById('app-screen-content').innerHTML=renderStage45();
+    if(window.lucide?.createIcons) lucide.createIcons();
+    return;
+  }
+  existingRenderScreen(tab);
+};
+function chooseDemoGarment(id) { expState.selectedId=id;persistDemo();renderScreen('circulate'); }
+function openUnusedReview(id) {
+  if(id) expState.selectedId=id;
+  persistDemo();
+  const item=selectedGarment();
+  showNewModal(`<div class="space-y-4">${modalTitle('STEP 04 · 미사용 여부 확인','잘못된 알림일 수도 있으므로 사용자가 직접 판단합니다.')}
+    <div class="flex items-center gap-3 bg-zinc-950 border border-zinc-800 p-3 rounded-xl">
+      <img src="${esc(item.image)}" class="h-16 w-16 object-cover rounded-lg"/>
+      <div><p class="text-xs font-bold text-white">${esc(item.name)}</p><p class="text-[11px] text-gray-400 mt-1">마지막 착용 기록: ${esc(item.lastWorn)} · ${Number(item.wears)||0}회</p></div></div>
+    <p class="text-xs text-gray-300">이 옷을 아직 입고 있나요? 기록이 없는 것과 실제로 입지 않은 것은 다를 수 있습니다.</p>
+    <div class="grid grid-cols-2 gap-2">${button('최근에 입었어요',`handleUnused('worn')`,'lime')}${button('계속 보관할게요',`handleUnused('keep')`,'gray')}${button('다음에 알려줘요',`handleUnused('later')`,'gray')}${button('순환을 고려할게요',`handleUnused('next')`,'coral')}</div>
+    <div class="rounded-lg bg-zinc-900 border border-zinc-700 p-2 text-[11px] text-gray-400">실패 가능성: 착용 기록 누락, 계절성 의류, 알림 피로. 해결: 사용자 확인과 연기/거절 선택권.</div></div>`);
+}
+function handleUnused(choice) {
+  const item=selectedGarment();
+  if(choice === 'next') { openRouteChoice(); return; }
+  if(choice === 'worn') {item.lastWorn='오늘';item.wears=(Number(item.wears)||0)+1;item.unused=false;item.dismissed=true;}
+  if(choice === 'keep'||choice==='later') {item.dismissed=true;}
+  expState.actions.push({itemId:item.id,action:choice,at:new Date().toISOString()});
+  persistDemo(); closeModal(); renderScreen('circulate');
+  const msg={worn:'착용 기록을 확인했습니다. 잘못된 알림은 해제했습니다.',keep:'계속 보관하기로 결정했습니다. 순환을 강요하지 않습니다.',later:'이번 데모에서는 알림을 숨겼습니다. 실제 예약 알림은 구현되지 않았습니다.'}[choice];
+  showNewModal(`<div class="space-y-3">${modalTitle('사용자 결정 반영')}<p class="text-xs text-gray-200">${msg}</p>${button('돌아가기','closeModal()','lime')}</div>`);
+}
+function openRouteChoice() {
+  showNewModal(`<div class="space-y-3">${modalTitle('STEP 05 · 순환 경로 선택',`${esc(selectedGarment().name)} · 기존 옷장 정보 재사용`)}
+    <div class="space-y-2">${Object.entries(pathway).map(([k,v])=>`<button onclick="openRouteForm('${k}')" class="w-full bg-zinc-950 border border-zinc-700 hover:border-coralAccent rounded-xl p-3 text-left"><strong class="text-xs text-white">${v.name}</strong><p class="text-[10px] text-gray-400 mt-1">${v.desc}</p></button>`).join('')}</div>
+    <div class="text-[11px] text-gray-400">선택 후 의류 상태와 추가 조건을 확인합니다. 클릭만으로 실제 거래나 기부가 성립하지 않습니다.</div></div>`);
+}
+function openRouteForm(route) {
+  if(!pathway[route]) return;
+  const it=selectedGarment();
+  showNewModal(`<div class="space-y-3">${modalTitle(`STEP 05 · ${pathway[route].name}`,pathway[route].desc)}
+    <div class="bg-zinc-950 rounded-lg border border-zinc-800 p-3 space-y-1"><p class="text-[10px] text-limeAccent">MY CLOSET에서 가져온 기존 데이터</p><p class="text-xs font-bold">${esc(it.name)}</p><p class="text-[11px] text-gray-400">${esc(it.category)} · ${esc(it.color)} · ${esc(it.lastWorn)}</p><p class="text-[10px] text-gray-500">사진, 소재, 상태 정보는 다시 확인해야 합니다.</p></div>
+    <label class="block text-[11px]">현재 의류 상태<select id="route-condition" class="block w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 mt-1 text-xs">${['양호','사용감 있음','수선 필요'].map(c=>`<option ${it.condition===c?'selected':''}>${c}</option>`).join('')}</select></label>
+    ${route==='sale'?`<label class="block text-[11px]">희망 판매가 (원)<input id="route-price" type="number" min="1000" step="1000" placeholder="예: 10000" class="block w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 mt-1 text-xs" /></label>`:''}
+    <label class="block text-[11px]">추가 조건 / 손상 / 전달 방법<textarea id="route-note" rows="2" placeholder="${route==='repair'?'수선할 위치와 희망 사항':route==='exchange'?'희망 교환 조건':route==='donate'?'기부 가능한 상태와 전달 방법':'상품 상태와 전달 방법'}" class="block w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 mt-1 text-xs"></textarea></label>
+    <label class="flex gap-2 text-[11px] text-gray-300 items-start"><input id="route-confirm" type="checkbox" class="accent-lime-400 mt-0.5"/>사진, 상태 및 기존 정보가 정확한지 직접 확인했습니다.</label>
+    <p id="route-error" class="hidden text-[11px] text-red-400" role="alert"></p>
+    <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-2 text-[10px] text-gray-400">관계자: ${pathway[route].who} / 본 페이지는 외부 서비스에 연결하지 않습니다.</div>
+    ${button('모의 요청서 생성',`submitDemoRequest('${route}')`,'coral')}
+    ${button('다른 경로 선택','openRouteChoice()','gray')}</div>`);
+}
+function submitDemoRequest(route) {
+  const condition=document.getElementById('route-condition')?.value;
+  const price=document.getElementById('route-price')?.value;
+  const note=document.getElementById('route-note')?.value.trim() || '';
+  const confirmed=Boolean(document.getElementById('route-confirm')?.checked);
+  const error=document.getElementById('route-error');
+  if(!confirmed || (route==='sale' && (!Number.isFinite(Number(price)) || Number(price)<1000)) || (route==='repair' && !note)) {
+    error.textContent=!confirmed?'먼저 의류 정보 확인에 동의해 주세요.':route==='sale'?'판매가는 1,000원 이상으로 입력해 주세요.':'수선 희망 사항을 작성해 주세요.';
+    error.classList.remove('hidden');return;
+  }
+  const item=selectedGarment();item.condition=condition;
+  const rec={id:'r'+Date.now(),itemId:item.id,route,condition,price:route==='sale'?Number(price):null,note,status:'requested',created:new Date().toISOString()};
+  expState.records.push(rec);persistDemo(); renderScreen('circulate'); showResult(rec.id);
+}
+function showResult(recId) {
+  const rec=expState.records.find(x=>x.id===recId);if(!rec) return;
+  const item=garmentById(rec.itemId) || selectedGarment();
+  let controls='';
+  if(rec.status==='requested') controls=`<p class="text-[11px] text-gray-400">모의 요청이 생성되었습니다. 실제 외부 파트너가 접수한 것은 아닙니다. 결과를 가정해 봅니다.</p><div class="grid grid-cols-2 gap-2">${button('성공 상황 시뮬레이션',`setOutcome('${rec.id}','matched')`,'lime')}${button('실패 상황 시뮬레이션',`setOutcome('${rec.id}','failed')`,'coral')}</div>`;
+  else if(rec.status==='matched') controls=`<p class="text-[11px] text-lime-400">가정: 다음 사용자 / 파트너가 연결되었습니다. 실제 전달은 아직 아닙니다.</p>${button('전달·재사용 완료를 가정',`setOutcome('${rec.id}','completed')`,'lime')}`;
+  else if(rec.status==='failed') controls=`<p class="text-[11px] text-red-300">실패 원인(가정): ${pathway[rec.route]?.failure || '외부 연결 실패'}</p><p class="text-[11px] text-gray-400">대안: 기존 정보는 보존하고 다른 경로를 시도하거나 다음에 다시 판단합니다.</p><div class="grid grid-cols-2 gap-2">${button('다른 경로 선택',`chooseFallback('${rec.id}')`,'coral')}${button('옷장에 보관','closeModal()','gray')}</div>`;
+  else controls=`<p class="text-[11px] text-lime-400">가정된 결과: ${rec.route==='repair'?'수선 후 재착용':'다음 사용자에게 전달되어 다시 사용됨'}.</p><p class="text-[11px] text-gray-400">이 시뮬레이션만으로 실제 의류 수명 연장이나 탄소 절감량이 증명되지는 않습니다.</p>${button('닫기','closeModal()','lime')}`;
+  showNewModal(`<div class="space-y-4">${modalTitle('CIRCULATION · 결과 확인','서비스 흐름의 성공과 실패를 비교하는 테스트')}
+    <div class="p-3 rounded-xl bg-zinc-950 border border-zinc-800 space-y-2"><p class="text-xs font-semibold">${esc(item.name)}</p><p class="text-[11px] text-gray-400">${pathway[rec.route]?.name || ''} · 정보 재사용 후 요청서 생성</p><p class="text-[11px] font-semibold text-coralAccent">${statusLabel(rec.status)}</p></div>
+    ${controls}<div class="text-[10px] text-yellow-300 border-t border-zinc-700 pt-2">수업용 가상 시나리오입니다. 실제 구매·교환·기부·수선 또는 탄소 감축이 수행된 것은 아닙니다.</div></div>`);
+}
+function setOutcome(recId,status) {
+  const rec=expState.records.find(x=>x.id===recId); if(!rec)return;
+  rec.status=status;persistDemo(); renderScreen('circulate');showResult(recId);
+}
+function chooseFallback(recId) { const r=expState.records.find(x=>x.id===recId);if(r)expState.selectedId=r.itemId;persistDemo();openRouteChoice(); }
+function resetDemo() {
+  if(!confirm('이 데모에서 저장한 요청서와 변경 사항을 초기화하시겠습니까?'))return;
+  try{localStorage.removeItem(demoKey);}catch(e){}
+  expState.selectedId='c4';expState.records=[];expState.actions=[];
+  myClosetItems.forEach((it,i)=>{it.dismissed=false;it.simulatedTransfer=false;if(i===3||i===4)it.unused=true;});
+  renderScreen('circulate');
+}
+openModal = function(type) {
+  if(type==='register-clothing'){openRegisterDemo();return;}
+  if(type==='unused-alert'){openUnusedReview();return;}
+  if(type==='choose-path'){openRouteChoice();return;}
+  if(type && type.startsWith('path-')){openRouteForm(type.slice(5));return;}
+  existingOpenModal(type);
+};
+// Make the Step 4 / 5 entry points explicit while preserving the original five-step flow.
+const oldGoToFlowStep=goToFlowStep;
+goToFlowStep=function(step){
+  oldGoToFlowStep(step);
+  if(step===5) {document.getElementById('current-flow-text').innerText='UNUSED ➔ CIRCULATE ➔ NEXT USER (DEMO)';}
+};
+
+// Registration is a minimal bridge from the original Digital Closet to STEP 04/05.
+let newImageData = '';
+function openRegisterDemo() {
+  newImageData='';
+  showNewModal(`<div class="space-y-3">${modalTitle('MY CLOSET · 의류 등록 (간이 데모)','실물 사진과 옷 정보를 저장해 04 → 05단계를 실험합니다.')}
+    <label class="block text-xs">옷 사진 (선택)<input id="new-photo" type="file" accept="image/*" onchange="previewRegistrationPhoto(this)" class="mt-1 block w-full text-[11px] text-gray-300"/></label>
+    <img id="reg-preview" alt="선택한 옷 사진" class="hidden w-24 h-24 rounded-lg object-cover"/>
+    <label class="block text-xs">의류명<input id="new-name" type="text" maxlength="80" placeholder="예: 네이비 니트" class="w-full mt-1 rounded-lg p-2 bg-zinc-900 border border-zinc-700 text-xs"/></label>
+    <div class="grid grid-cols-2 gap-2"><label class="text-xs">종류<select id="new-category" class="w-full mt-1 rounded-lg p-2 bg-zinc-900 border border-zinc-700"><option>아우터</option><option>상의</option><option>하의</option><option>기타</option></select></label>
+    <label class="text-xs">색상<input id="new-color" type="text" maxlength="25" placeholder="예: Navy" class="w-full mt-1 rounded-lg p-2 bg-zinc-900 border border-zinc-700"/></label></div>
+    <label class="block text-xs">마지막 착용 후 경과 일수 (테스트용)<input id="new-days" type="number" value="60" min="0" max="3650" class="w-full mt-1 rounded-lg p-2 bg-zinc-900 border border-zinc-700"/></label>
+    <p class="text-[10px] text-yellow-300">AI 자동 인식 / 실제 DPP 연동은 아직 구현되지 않았습니다. 정보는 직접 입력하고 브라우저에만 저장됩니다.</p>
+    <p id="reg-error" class="text-red-400 text-[11px] hidden"></p>${button('디지털 옷장에 저장','completeRegistration()','lime')}</div>`);
+}
+function previewRegistrationPhoto(input) {
+  const file=input.files?.[0];if(!file || !file.type.startsWith('image/'))return;
+  const reader = new FileReader();
+  reader.onload=()=>{
+    const img=new Image();img.onload=()=>{
+      const canvas=document.createElement('canvas');
+      const factor=Math.min(1,480/Math.max(img.width,img.height));
+      canvas.width=Math.max(1,Math.round(img.width*factor)); canvas.height=Math.max(1,Math.round(img.height*factor));
+      canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
+      newImageData=canvas.toDataURL('image/jpeg',0.65);
+      const target=document.getElementById('reg-preview');if(target){target.src=newImageData;target.classList.remove('hidden');}
+    };img.src=reader.result;
+  };reader.readAsDataURL(file);
+}
+completeRegistration=function(){
+  const name=document.getElementById('new-name')?.value.trim();
+  const days=parseInt(document.getElementById('new-days')?.value,10);
+  const error=document.getElementById('reg-error');
+  if(!name||!Number.isFinite(days)||days<0){error.textContent='의류명과 올바른 마지막 착용 일수를 입력해 주세요.';error.classList.remove('hidden');return;}
+  const category=document.getElementById('new-category').value;
+  const color=document.getElementById('new-color').value.trim() || '미기록';
+  const placeholder='data:image/svg+xml;charset=UTF-8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="420" height="420"><rect width="420" height="420" fill="#27272a"/><text x="50%" y="50%" font-family="sans-serif" font-size="25" text-anchor="middle" fill="#a3e635">RE:WEAR</text></svg>');
+  const item={id:'local-'+Date.now(),name,category,color,wears:0,lastWorn:days+'일 전',unused:days>=45,tag:'LOCAL-DEMO',image:newImageData||placeholder,condition:'양호',dismissed:false};
+  myClosetItems.push(item);expState.selectedId=item.id;persistDemo();closeModal();switchTab('closet');
+  showNewModal(`<div class="space-y-3">${modalTitle('의류 저장 완료','이제 04 · 05단계에서 선택할 수 있습니다.')}<p class="text-xs text-gray-200">${esc(name)} · 마지막 착용 ${days}일 전</p>${button('04 · 05단계 테스트','closeModal();goToFlowStep(4)','lime')}</div>`);
+};
+
+</script>
+<style>
+@media(max-width:420px){body{padding:0.5rem!important}.relative.w\[380px\]{width:min(100%,380px)!important}.lg\:w-80,.lg\:w-72{width:100%}}
+</style>
+</body>
+</html>
